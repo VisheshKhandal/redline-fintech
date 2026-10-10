@@ -56,6 +56,12 @@ The official Better Auth plugin verifies signatures. Handlers fetch current Pola
 
 ## Checks
 
+Redline includes an installable manifest, canonical brand icons and a service worker that caches only an explicit list of public icons and `/offline.html`. All pages remain network-only; APIs, OAuth, checkout and billing requests bypass the worker. Update the `redline-public-v1` cache version in `public/sw.js` when changing cached assets. Install UI appears only when the browser exposes an installation prompt; iOS users can use Safari's Add to Home Screen.
+
+SEO uses the canonical origin in `src/lib/seo.js`. Public login/signup pages are in the sitemap; all dashboard descendants inherit `noindex` from the server layout. No authenticated data is used in metadata.
+
+After a production build, `node scripts/audit-responsive.mjs` starts an isolated local server/Chrome profile and checks nine routes at seven widths, short-height dialogs and offline behavior. Set `CHROME_PATH` if Chrome is elsewhere. `--paid` additionally uses the existing Sandbox subscription and creates/deletes a temporary local session; review before running. While a local production server is running on port 3100, `node scripts/check-site-metadata.mjs` validates SEO/PWA endpoints and assets.
+
 ```sh
 npm run build
 node scripts/check-billing.mjs

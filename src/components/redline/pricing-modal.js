@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   X,
   Check,
@@ -17,6 +17,7 @@ import {
   Info,
 } from "lucide-react";
 import { useDashboard } from "@/context/dashboard-context";
+import { useDialogFocus } from "@/hooks/use-dialog-focus";
 import { Brand } from "./brand";
 import { PLANS } from "@/lib/market-data";
 
@@ -34,6 +35,8 @@ export default function PricingModal() {
 
   const [activeFaq, setActiveFaq] = useState(null);
 
+  const dialogRef = useRef(null);
+  useDialogFocus(pricingModalOpen, dialogRef, closePricingModal);
   if (!pricingModalOpen) return null;
 
   const proPrice = "$29.00";
@@ -75,6 +78,7 @@ export default function PricingModal() {
       {pricingModalOpen && (
         <div className="pricing-modal-backdrop" onClick={closePricingModal}>
           <div
+            ref={dialogRef}
             className="pricing-modal-container"
             onClick={(e) => e.stopPropagation()}
             role="dialog"

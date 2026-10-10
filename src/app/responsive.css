@@ -1,0 +1,138 @@
+/* Intrinsic sizing and local scrolling: the page itself never clips overflow. */
+.redline :where(section, article, header, footer, nav, main, aside, form, div) { min-width: 0; }
+.redline :where(img, video, canvas) { max-width: 100%; }
+.redline-brand > img { width: 30px; height: 30px; flex: 0 0 30px; }
+.terminal-main { min-width: 0; }
+.terminal-sidebar { padding-bottom: max(20px, env(safe-area-inset-bottom)); }
+.terminal-sidebar > * { flex-shrink: 0; }
+.terminal-topbar { height: auto; min-height: 72px; gap: 12px; flex-wrap: wrap; padding-block: 12px; }
+.topbar-location { min-width: 0; flex-wrap: wrap; }
+.topbar-right { flex-wrap: wrap; justify-content: flex-end; }
+.overview-heading-actions, .section-header-row, .panel-heading, .asset-heading, .chart-toolbar, .chart-footer { flex-wrap: wrap; gap: 12px; }
+.redline :where(.table-wrap, .holdings-table-wrap, .market-table-wrap, .matrix-table-wrap) { width: 100%; max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; }
+.redline table { width: 100%; }
+.premium-gate-section { display: grid; height: auto; min-height: 0; }
+.premium-gate-backdrop, .premium-gate-overlay { grid-area: 1 / 1; }
+.premium-gate-overlay { position: relative; inset: auto; height: auto; overflow: visible; padding: clamp(20px, 3vw, 36px); }
+.premium-gate-inner { align-self: center; }
+.premium-gate-meta-row { flex-wrap: wrap; justify-content: center; }
+.premium-gate-benefit-item { max-width: 100%; text-align: left; }
+.premium-gate-benefit-item span { overflow-wrap: anywhere; }
+.premium-gate-title { overflow-wrap: anywhere; }
+.premium-gate-cta, .plan-button { white-space: normal; }
+.pricing-modal-container { max-height: calc(100dvh - 32px); overscroll-behavior: contain; }
+.reader-dialog { max-width: calc(100vw - 24px); max-height: calc(100dvh - 24px); overflow-y: auto; }
+.market-chart > svg, .technical-indicator-chart svg, .comparison-chart svg { width: 100%; max-width: 100%; display: block; }
+.chart-readout { flex-wrap: wrap; }
+.chart-scrubber { min-width: 0; }
+.chart-scrubber input { min-width: 40px; flex: 1; }
+.pwa-install { position: fixed; z-index: 45; bottom: max(14px, env(safe-area-inset-bottom)); right: 14px; border: 1px solid #f04b61; border-radius: 30px; background: #201017; color: #fff; padding: 12px 18px; font: 600 13px system-ui; box-shadow: 0 8px 30px #0008; cursor: pointer; }
+.pwa-install:focus-visible { outline: 2px solid white; outline-offset: 4px; }
+.pwa-install { display: flex; align-items: center; padding: 0; }
+.pwa-install button { border: 0; border-radius: 30px; background: transparent; color: inherit; font: inherit; padding: 12px 16px; min-height: 44px; cursor: pointer; }
+.pwa-install button:last-child { border-left: 1px solid #733042; border-radius: 0 30px 30px 0; padding-inline: 14px; font-size: 20px; }
+.pwa-install button:focus-visible { outline: 2px solid white; outline-offset: 2px; }
+@media (max-width: 1100px) {
+  .topbar-date, .market-status { display: none; }
+  .fundamental-stats-grid, .risk-metrics-row, .quant-metrics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .terminal-topbar { position: sticky; top: 0; z-index: 30; }
+  .portfolio-stats-strip, .portfolio-allocation-grid, .portfolio-pro-tools-grid, .watchlist-content-layout, .pro-insights-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .portfolio-allocation-grid, .portfolio-pro-tools-grid, .watchlist-content-layout, .pro-insights-grid { grid-template-columns: minmax(0, 1fr); }
+  .pricing-modal-container { padding: 24px; }
+}
+@media (max-width: 850px) {
+  .terminal-sidebar { width: min(304px, calc(100vw - 40px)); visibility: hidden; }
+  .terminal-sidebar.is-open { visibility: visible; }
+}
+@media (max-width: 680px) {
+  .redline { font-size: 14px; }
+  .redline :where(button, input, select, textarea) { min-height: 44px; }
+  .redline :where(input, select, textarea) { font-size: 16px; }
+  .redline .icon-button { min-width: 44px; min-height: 44px; }
+  .terminal-topbar { display: grid; grid-template-columns: minmax(0, 1fr); padding: 10px 16px; gap: 6px; }
+  .topbar-location { font-size: 12px; }
+  .topbar-right { justify-content: flex-start; gap: 8px; }
+  .topbar-right .demo-tag { font-size: 10px; }
+  .topbar-upgrade-button, .dashboard-signout { font-size: 11px; }
+  .plan-badge { min-height: 32px; }
+  .plan-badge-upgrade-link { min-height: 32px !important; }
+  .dashboard-content { padding: 24px 16px 32px; }
+  .overview-heading { flex-direction: column; gap: 16px; }
+  .overview-heading h1 { font-size: clamp(28px, 8vw, 38px); }
+  .overview-heading p { max-width: none; font-size: 13px; }
+  .overview-heading .eyebrow { font-size: 9px; line-height: 1.6; }
+  .overview-heading-actions { width: 100%; }
+  .overview-heading-actions > * { max-width: 100%; }
+  .overview-heading .export-button { margin: 0; font-size: 11px; gap: 8px; }
+  .panel h2 { font-size: 15px; }
+  .panel-heading { align-items: flex-start; }
+  .index-values { flex-wrap: wrap; gap: 6px; }
+  .index-values strong { font-size: clamp(17px, 5vw, 24px); }
+  .index-values .sparkline { max-width: 54px; }
+  .index-card { padding: 14px 10px; }
+  .stock-name { flex: 1; }
+  .stock-name > small { max-width: 100%; white-space: normal; }
+  .stock-row { gap: 8px; padding: 12px; flex-wrap: wrap; }
+  .stock-row > .sparkline { width: 46px; }
+  .stock-values { min-width: 62px; }
+  .chart-options, .timeframes { flex-wrap: wrap; }
+  .chart-readout { font-size: 10px; gap: 8px; }
+  .market-chart > svg { min-height: 0; height: auto; aspect-ratio: auto; }
+  .chart-scrubber { gap: 8px; font-size: 10px; }
+  .timeframes button { padding-inline: 9px; }
+  .briefing-filters-bar, .markets-filters-bar, .watchlist-capacity-bar { flex-direction: column; align-items: stretch; }
+  .topic-tabs, .sector-tabs, .watchlist-tabs { display: flex; flex-wrap: wrap; }
+  .segmented-tabs { display: flex; flex-wrap: wrap; width: 100%; gap: 4px; }
+  .segmented-tabs .tab-btn { flex: 1 1 120px; justify-content: center; white-space: normal; }
+  .stock-select-dropdown { min-width: 0; width: 100%; max-width: 100%; }
+  .quick-add-group { width: 100%; }
+  .capacity-label-row { flex-wrap: wrap; gap: 8px; }
+  .capacity-info { width: 100%; }
+  .briefing-search, .market-search { min-width: 0; width: 100%; }
+  .articles-grid, .pricing-plans-grid, .pricing-trust-bar, .faq-grid, .sentiment-indicators-grid, .stress-scenarios-grid { grid-template-columns: minmax(0, 1fr); }
+  .pricing-modal-backdrop { padding: 12px; }
+  .pricing-modal-container { padding: 20px 16px; max-height: calc(100dvh - 24px); }
+  .pricing-badge-strip, .plan-name-row, .pricing-modal-header-top, .reader-meta-row, .briefing-card-footer { flex-wrap: wrap; gap: 10px; }
+  .pricing-card { padding: 20px 16px; }
+  .pricing-card-header, .pricing-card-features, .pricing-card-footer { padding-inline: 0; }
+  .pricing-modal-title-block h2 { font-size: 26px; }
+  .premium-gate-title { font-size: 21px; }
+  .premium-gate-desc { font-size: 13px; }
+  .premium-gate-benefits { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .premium-gate-benefit-item { font-size: 12px; padding: 10px; }
+  .premium-gate-cta { width: 100%; padding-inline: 14px; }
+  .premium-gate-pricing-info { max-width: 100%; }
+  .flow-stats-row, .report-key-metrics-grid, .sentiment-score-row { grid-template-columns: minmax(0, 1fr); }
+  .login-shell { min-height: 100svh; }
+  .login-story { overflow: hidden; }
+  .login-panel { padding: 24px 20px; }
+  .login-form { width: 100%; max-width: 420px; margin-inline: auto; }
+  .login-top, .login-footer { flex-wrap: wrap; gap: 12px; }
+  .login-top > span { max-width: 100%; }
+  .login-form > p, .login-note, .login-assurance, .auth-account-link { font-size: 12px; }
+  .story-copy .eyebrow { font-size: 9px; }
+  .story-copy p, .story-bottom { font-size: 12px; }
+  .credentials-form input { font-size: 16px; }
+  .billing-details > div { flex-direction: column; gap: 6px; }
+  .billing-details dd { text-align: left; overflow-wrap: anywhere; }
+  .reader-dialog-body { padding: 22px 18px; }
+  .reader-dialog h2 { font-size: 25px; overflow-wrap: anywhere; }
+}
+@media (max-width: 390px) {
+  .indices-row, .portfolio-stats-strip, .fundamental-stats-grid, .risk-metrics-row, .quant-metrics-grid { grid-template-columns: minmax(0, 1fr); }
+  .topbar-right { gap: 6px; }
+  .topbar-upgrade-button { padding-inline: 10px; }
+  .premium-gate-overlay { padding: 20px 14px; }
+}
+@media (max-height: 600px) {
+  .terminal-sidebar { padding-top: 12px; }
+  .sidebar-brand { padding-bottom: 16px; }
+  .login-panel { min-height: auto; }
+  .pricing-modal-backdrop { align-items: flex-start; }
+  .terminal-topbar { position: relative; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .redline *, .redline *::before, .redline *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

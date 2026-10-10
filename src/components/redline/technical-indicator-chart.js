@@ -1,17 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import { useChartWidth } from "@/hooks/use-chart-width";
 
 export default function TechnicalIndicatorChart({
   data,
   symbol = "NVDA",
 }) {
   const [activeIdx, setActiveIdx] = useState(null);
+  const [chartRef, width] = useChartWidth(840);
 
   if (!data || data.length === 0) return null;
 
   const length = data.length;
-  const width = 840;
+
   const height = 150;
   const left = 30;
   const right = 45;
@@ -34,7 +36,7 @@ export default function TechnicalIndicatorChart({
   const y50 = y(50);
 
   return (
-    <div className="technical-indicator-chart">
+    <div ref={chartRef} className="technical-indicator-chart">
       <div className="indicator-header">
         <div className="indicator-title-row">
           <span className="indicator-badge">RSI (14)</span>
@@ -67,7 +69,7 @@ export default function TechnicalIndicatorChart({
         viewBox={`0 0 ${width} ${height}`}
         role="img"
         aria-label="RSI technical indicator chart"
-        onMouseLeave={() => setActiveIdx(null)}
+        onPointerLeave={() => setActiveIdx(null)}
       >
         {/* Shaded Neutral Band between 30 and 70 */}
         <rect
@@ -179,7 +181,7 @@ export default function TechnicalIndicatorChart({
             width={(width - left - right) / length}
             height={height - top - bottom}
             fill="transparent"
-            onMouseEnter={() => setActiveIdx(i)}
+            onPointerEnter={() => setActiveIdx(i)} onPointerDown={() => setActiveIdx(i)}
           />
         ))}
       </svg>

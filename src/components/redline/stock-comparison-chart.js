@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useChartWidth } from "@/hooks/use-chart-width";
 import { makeSeries, signed, stocks } from "@/lib/market-data";
 
 export default function StockComparisonChart({
@@ -9,6 +10,7 @@ export default function StockComparisonChart({
   timeframe = "1M",
 }) {
   const [activeIdx, setActiveIdx] = useState(null);
+  const [chartRef, width] = useChartWidth(840);
 
   // Generate deterministic series for all compared stocks
   const allStocks = [baseStock, ...compareStocks];
@@ -18,7 +20,7 @@ export default function StockComparisonChart({
   }));
 
   const length = seriesData[0]?.data?.length || 48;
-  const width = 840;
+
   const height = 240;
   const left = 35;
   const right = 45;
@@ -58,7 +60,7 @@ export default function StockComparisonChart({
   const activePointIdx = activeIdx === null ? length - 1 : activeIdx;
 
   return (
-    <div className="stock-comparison-chart">
+    <div ref={chartRef} className="stock-comparison-chart">
       <div className="comparison-chart-header">
         <div className="comparison-badges">
           {normalizedSeries.map(({ stock, points }) => {
@@ -88,7 +90,7 @@ export default function StockComparisonChart({
         viewBox={`0 0 ${width} ${height}`}
         role="img"
         aria-label="Stock comparative performance chart"
-        onMouseLeave={() => setActiveIdx(null)}
+        onPointerLeave={() => setActiveIdx(null)}
       >
         {/* Baseline 0% line */}
         <line
@@ -196,7 +198,7 @@ export default function StockComparisonChart({
             width={(width - left - right) / length}
             height={height - top - bottom}
             fill="transparent"
-            onMouseEnter={() => setActiveIdx(i)}
+            onPointerEnter={() => setActiveIdx(i)} onPointerDown={() => setActiveIdx(i)}
           />
         ))}
 

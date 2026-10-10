@@ -52,6 +52,16 @@ try {
   }
   const secondPaidSession = await cookie(paid.userId);
   assert.equal((await (await request("/api/billing/plan", secondPaidSession)).json()).plan, "pro");
+  assert.equal((await request("/api/auth/sign-out", secondPaidSession, { method: "POST", headers: { "content-type": "application/json" }, body: "{}" })).status, 200);
+  assert.equal(await (await request("/api/auth/get-session", secondPaidSession)).json(), null);
+  console.log("PASS: sign-out invalidates only the temporary authenticated session");
+  for (const provider of ["google", "github"]) {
+    const social = await request("/api/auth/sign-in/social", "", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ provider, callbackURL: "/dashboard" }) });
+    assert.equal(social.status, 200);
+    const data = await social.json();
+    assert.ok(new URL(data.url).hostname.endsWith(provider === "google" ? "google.com" : "github.com"));
+  }
+  console.log("PASS: Google/GitHub OAuth initiation returns authentic provider authorization URLs");
   console.log("PASS: anonymous 401, Free 403, paid 200; repeat authenticated plan reads stay Pro");
   const symbols = ["NVDA", "AAPL", "MSFT", "TSLA", "AMZN", "META"];
   assert.equal((await request("/api/watchlist", freeCookie, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ symbols }) })).status, 403);

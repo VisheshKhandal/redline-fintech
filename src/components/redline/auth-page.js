@@ -1,3 +1,4 @@
+import { SITE_URL, SITE_DESCRIPTION } from "@/lib/seo";
 import Link from "next/link";
 import { ArrowUpRight, LockKeyhole, Orbit, ShieldCheck, Zap } from "lucide-react";
 import { Brand } from "./brand";
@@ -6,6 +7,7 @@ import AuthForm from "./auth-form";
 export default function AuthPage({ mode = "login" }) {
   const signup = mode === "signup";
   return <main className="redline login-shell">
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "SoftwareApplication", name: "Redline", url: `${SITE_URL}/login`, description: SITE_DESCRIPTION, applicationCategory: "FinanceApplication", operatingSystem: "Web" }).replace(/</g, "\u003c") }} />
     <section className="login-story" aria-label="Redline market intelligence">
       <Brand />
       <div className="story-copy enter"><span className="eyebrow"><span className="status-dot" /> A NEW PERSPECTIVE ON THE MARKETS</span>

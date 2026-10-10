@@ -1,9 +1,10 @@
 import Link from "next/link";
+import Image from "next/image";
 export function Brand({
   compact = false
 }) {
   return <Link href="/login" className="redline-brand" aria-label="Redline home">
-    <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M4 25 13 7h7L11 25H4Zm12 0 9-18h4l-9 18h-4Z" fill="currentColor" /></svg>
+    <Image src="/icons/redline-mark.svg" width="30" height="30" alt="" aria-hidden="true" unoptimized />
     {!compact && <span>redline<span className="brand-period">.</span></span>}
   </Link>;
 }
